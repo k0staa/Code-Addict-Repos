@@ -1,6 +1,6 @@
 # Spring Boot 2 - Permission Evaluator Configuration Demo
 
-Aim of the project is to show how to create own PermissionEvaluator class and configure Spring Boot 2 application to use it on controllers (as `@PreAuthorize` annotation) and in Thymeleaf views (as `sec:authorize="hasPermission"`). Whole idea is described in my blog post [Code-Addict](http://code-addict.pl/)
+Aim of the project is to show how to create own PermissionEvaluator class and configure Spring Boot 2 application to use it on controllers (as `@PreAuthorize` annotation) and in Thymeleaf views (as `sec:authorize="hasPermission"`). Whole idea is described in my blog post [Code-Addict](http://code-addict.pl/permission-evaluator-boot2/)
 
 ## Functionalities:
 
