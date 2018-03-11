@@ -1,23 +1,24 @@
-# Reporting Services URL Client Demo
+# Spring Boot 2 - Permission Evaluator Configuration Demo
 
-Aim of the project is to show how to connect and download report from Microsoft Reporting Services using URL request. Whole idea is described in my blog post [Code-Addict](http://code-addict.pl/reporting-services-rest-url-client/)
+Aim of the project is to show how to create own PermissionEvaluator class and configure Spring Boot 2 application to use it on controllers (as `@PreAuthorize` annotation) and in Thymeleaf views (as `sec:authorize="hasPermission"`). Whole idea is described in my blog post [Code-Addict](http://code-addict.pl/)
 
 ## Functionalities:
 
-- Connect to Reporting Services and download URL
+- Authorize logged user to business objects which are owned by him.
 
 ## Dependencies
 Project is very simple and uses following dependencies:
- - Spring Boot 1.5
- - Apache HTTP Client 4.5
+ - Spring Boot 2
+ - Thymeleaf 3
+ - Thymeleaf Security Dialect
  - Lombok 1.16.20
 
 ## Running
 
-You can run application using maven `mvn spring-boot:run` command. Please see blog post and configure the appropriate program parameters.
+You can run application using maven `mvn spring-boot:run`. Please see blog post for details
 
 ## Testing
-There is a simple test class to show how URL Client works.
+I write some tests to check authorization functionality.
 
 ## Licence
 
