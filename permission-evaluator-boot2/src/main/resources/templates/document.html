@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Custom Permission Evaluator + Thymeleaf demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<h2>Confidential Document Details</h2>
+<label for="docId">Document ID:</label>
+<input type="text" disabled id="docId" th:value="${document.id}"/>
+
+<label for="docFileName">Document File Name:</label>
+<input type="text" disabled id="docFileName" th:value="${document.fileName}"/>
+
+<a th:href="@{/}" th:text="${'Back'}"></a>
+
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+
+<head>
+    <title>Custom Permission Evaluator + Thymeleaf demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<h2>Confidential Documents</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>File Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="doc,status : ${documents}">
+        <td> [[${doc.id}]]</td>
+        <td>[[${doc.fileName}]]
+            <span th:if="${#authorization.expression('hasPermission(__${doc.id}__ ,''ConfidentialDocument'', ''read'')')}">
+                 <a th:href="@{/document/__${doc.id}__}" th:text="${'Edit ' + doc.fileName}"></a>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div sec:authorize="hasAuthority('ROLE_ADMIN')">
+    Only for admin
+</div>
+</body>
+
+</html>
