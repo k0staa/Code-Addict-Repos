@@ -40,7 +40,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
                 .and()
                 .logout()
                 .permitAll()
@@ -70,7 +69,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SpnegoEntryPoint spnegoEntryPoint() {
-        return new SpnegoEntryPoint("/login");
+        return new SpnegoEntryPoint("/");
     }
 
     @Bean
@@ -101,7 +100,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         ticketValidator.setServicePrincipal(servicePrincipal); //At this point, it must be according to what we were given in the
         // commands from the first step.
         FileSystemResource fs = new FileSystemResource(keytabFilePath); //Path to file tomcat.keytab
-        log.info("Initializing Kerberos KEYTAB file path:" + fs.getFilename());
+        log.info("Initializing Kerberos KEYTAB file path:" + fs.getFilename() + " for principal: " + servicePrincipal + "file exist: " + fs.exists());
         Assert.notNull(fs.exists(), "*.keytab key must exist. Without that security is useless.");
         ticketValidator.setKeyTabLocation(fs);
         ticketValidator.setDebug(true); //Turn off when it will works properly,
