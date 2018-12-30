@@ -1,0 +1,2 @@
+include 'demo-hazelcast-cache'
+include 'demo-hazelcast-client'
