@@ -18,7 +18,11 @@ Project is very simple and uses following dependencies:
  - Kotlin
 
 ## Running
-
+First please run gradle build command with docker image build task:
+`./gradlew build appDocker`
+Now you can start docker by run simple docker-compose command:
+`cd docker && docker-compose up`
+Go to `localhost:8080/hazelcast/stream` and see how it works.
 
 ## Licence
 
