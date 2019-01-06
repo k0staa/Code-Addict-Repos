@@ -1,12 +1,12 @@
-package pl.codeaddict.demohazelcast
+package pl.codeaddict.demohazelcast.client
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DemoHazelcastApplication
+class DemoHazelcastApplicationClient
 
 fun main(args: Array<String>) {
-	runApplication<DemoHazelcastApplication>(*args)
+	runApplication<DemoHazelcastApplicationClient>(*args)
 }
 

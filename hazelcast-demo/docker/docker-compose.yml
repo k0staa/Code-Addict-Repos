@@ -1,0 +1,8 @@
+version: '2'
+services:
+  demo-hazelcast-cache:
+    image: pl.codeaddict/demo-hazelcast-cache:0.0.1-SNAPSHOT
+  demo-hazelcast-client:
+    image: pl.codeaddict/demo-hazelcast-client:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"

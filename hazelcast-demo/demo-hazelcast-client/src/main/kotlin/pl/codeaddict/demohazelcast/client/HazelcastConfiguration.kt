@@ -1,4 +1,4 @@
-package pl.codeaddict.demohazelcast
+package pl.codeaddict.demohazelcast.client
 
 import com.hazelcast.client.HazelcastClient
 import com.hazelcast.client.config.ClientConfig
@@ -12,7 +12,7 @@ class HazelcastConfiguration {
     fun clientConfig(): ClientConfig {
         val clientConfig = ClientConfig()
         val networkConfig = clientConfig.getNetworkConfig()
-        networkConfig.addAddress("localhost:5701", "localhost:5702")
+        networkConfig.addAddress("demo-hazelcast-cache:5701", "demo-hazelcast-cache:5702")
                 .setSmartRouting(true)
                 .addOutboundPortDefinition("34700-34710")
                 .setRedoOperation(true)

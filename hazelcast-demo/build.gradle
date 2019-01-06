@@ -1,9 +1,32 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.2.71'
+        springBootVersion = '2.1.1.RELEASE'
+        gradleDockerVersion   = "1.2"
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("se.transmode.gradle:gradle-docker:${gradleDockerVersion}")
+    }
+
+}
+
+
+allprojects {
+    group = 'pl.codeaddict'
+    version = '0.0.1-SNAPSHOT'
+}
+
 subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
     }
-    
 }
 
 

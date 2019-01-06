@@ -1,4 +1,4 @@
-package pl.codeaddict.demohazelcast
+package pl.codeaddict.demohazelcast.cache
 
 import com.hazelcast.config.Config
 import com.hazelcast.config.EvictionPolicy

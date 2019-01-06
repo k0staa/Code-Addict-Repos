@@ -1,4 +1,4 @@
-package pl.codeaddict.demohazelcast
+package pl.codeaddict.demohazelcast.cache
 
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.IMap

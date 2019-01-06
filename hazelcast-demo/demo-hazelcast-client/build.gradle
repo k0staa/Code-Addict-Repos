@@ -1,38 +1,47 @@
-buildscript {
-	ext {
-		kotlinVersion = '1.2.71'
-		springBootVersion = '2.1.1.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-	}
+plugins {
+    id 'kotlin'
+    id 'kotlin-spring'
+    id 'eclipse'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'application'
+    id 'docker'
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-group = 'pl.codeaddict'
-version = '0.0.1-SNAPSHOT'
+mainClassName = 'pl.codeaddict.demohazelcast.client.DemoHazelcastApplicationClientKt'
 sourceCompatibility = 1.8
 compileKotlin {
-	kotlinOptions {
-		freeCompilerArgs = ["-Xjsr305=strict"]
-		jvmTarget = "1.8"
-	}
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
 }
 compileTestKotlin {
-	kotlinOptions {
-		freeCompilerArgs = ["-Xjsr305=strict"]
-		jvmTarget = "1.8"
-	}
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
+
+jar {
+    manifest { attributes 'Main-Class': "$mainClassName" }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+docker {
+    maintainer = 'Michal Kostewicz <m.kostewicz84@gmail.com>'
+    baseImage "frolvlad/alpine-oraclejdk8:slim"
+}
+
+task copyTar(type: Copy) {
+    from file("$buildDir/distributions/demo-hazelcast-client-0.0.1-SNAPSHOT.tar")
+    into file("$buildDir/docker")
+}
+
+task appDocker(type: Docker) {
+    dependsOn 'copyTar'
+    addFile('demo-hazelcast-client-0.0.1-SNAPSHOT.tar', '/')
+    entryPoint( ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/demo-hazelcast-client-0.0.1-SNAPSHOT/lib/demo-hazelcast-client-0.0.1-SNAPSHOT.jar"])
 }
 
 dependencies {
