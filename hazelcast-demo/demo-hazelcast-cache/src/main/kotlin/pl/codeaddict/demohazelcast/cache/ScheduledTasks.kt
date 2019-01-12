@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ScheduledTasks {
-    val key = "MY_VALUE"
+    val key = "MY_KEY"
 
     @Autowired
     private val hazelcastInstance: HazelcastInstance? = null

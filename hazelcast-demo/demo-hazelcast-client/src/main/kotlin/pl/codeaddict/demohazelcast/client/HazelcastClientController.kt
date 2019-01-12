@@ -15,7 +15,7 @@ import java.time.Duration.ofMillis
 
 @RestController
 class HazelcastClientController {
-    val key = "MY_VALUE"
+    val key = "MY_KEY"
 
     @Autowired
     private val hazelcastInstance: HazelcastInstance? = null
