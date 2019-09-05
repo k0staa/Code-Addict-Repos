@@ -1,0 +1,26 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.7.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'pl.codeaddict'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.apache.camel:camel-spring-boot-starter:2.24.0'
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.apache.camel:camel-jdbc-starter:2.24.0'
+	implementation 'org.apache.camel:camel-sql-starter:2.24.0'
+	compileOnly 'org.projectlombok:lombok:1.18.8'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+
+}
