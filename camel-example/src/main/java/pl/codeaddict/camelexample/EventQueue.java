@@ -7,8 +7,8 @@ import lombok.Data;
  */
 @Data
 public class EventQueue {
-    private int id;
-    private int data;
+    private Long id;
+    private String data;
 
     @Override
     public String toString() {

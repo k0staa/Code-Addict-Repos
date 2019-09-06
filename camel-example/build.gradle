@@ -21,6 +21,4 @@ dependencies {
 	implementation 'org.apache.camel:camel-sql-starter:2.24.0'
 	compileOnly 'org.projectlombok:lombok:1.18.8'
 	annotationProcessor 'org.projectlombok:lombok:1.18.8'
-
-
 }

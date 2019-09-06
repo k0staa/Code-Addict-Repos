@@ -21,29 +21,19 @@ import java.util.stream.Collectors;
 
 @Component
 public class QueueSelectRoute extends RouteBuilder {
-    @Autowired
-    DataSource dataSource;
-
-    public DataSource getDataSource() {
-        return dataSource;
-    }
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     @Override
     public void configure() throws Exception {
         from("timer://dbQueryTimer?period=10s")
                 .routeId("DATABASE_QUERY_TIMER_ROUTE")
-                .to("sql:SELECT * FROM allegro_queue_parcels?dataSource=#dataSource")
+                .to("sql:SELECT * FROM event_queue?dataSource=#dataSource")
                 .process(xchg -> {
                     List<Map<String, Object>> row = xchg.getIn().getBody(List.class);
                     row.stream()
                             .map((x) -> {
                                 EventQueue eventQueue = new EventQueue();
-                                eventQueue.setId((int)x.get("id"));
-                                eventQueue.setId((int)x.get("data"));
+                                eventQueue.setId((Long)x.get("id"));
+                                eventQueue.setData((String)x.get("data"));
                                 return eventQueue;
                             }).collect(Collectors.toList());
                 })
