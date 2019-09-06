@@ -1,7 +1,7 @@
 # Apache Camel with Spring Boot 2.1 Demo app
 
 Aim of the project is to show how to use Apache Camel with SQL component in Spring Boot 2 application. Whole idea is described in my blog 
-post [Code-Addict](http://code-addict.pl/hazelcast-distributed-cache/)
+post [Code-Addict](http://code-addict.pl/spring-boot-2-camel/)
 
 ## Functionalities:
 The application launches the camel route which in a given time interval downloads data from the database.
