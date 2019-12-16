@@ -1,0 +1,63 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'org.asciidoctor.convert' version '1.6.1'
+	id 'groovy'
+}
+
+group = 'pl.codeaddict'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	snippetsDir = "$buildDir/generated-snippets"
+	spockVersion = '1.3-groovy-2.5'
+	springRestDocsVersion = '2.0.4.RELEASE'
+	lombokVersion = '1.18.10'
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+	testImplementation "org.spockframework:spock-core:$spockVersion"
+	testImplementation "org.spockframework:spock-spring:$spockVersion"
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:$springRestDocsVersion"
+	testImplementation("org.springframework.restdocs:spring-restdocs-restassured:$springRestDocsVersion") {
+		exclude group: 'com.sun.xml.bind', module: 'jaxb-osgi'
+	}
+
+	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+}
+
+test {
+	outputs.dir snippetsDir
+}
+
+task copyAsciidocTemplate(type: Copy) {
+	dependsOn test
+	from "src/docs/asciidoc"
+	into snippetsDir
+}
+
+asciidoctor {
+	dependsOn copyAsciidocTemplate
+	sourceDir snippetsDir
+	doLast {
+		copy {
+			from "$buildDir/asciidoc/html5"
+			into "$buildDir/resources/main/public/docs"
+			include "**/*.html"
+		}
+	}
+}
+
+build.dependsOn(asciidoctor)

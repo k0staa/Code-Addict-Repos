@@ -1,0 +1,17 @@
+= Blog demo API
+
+== Login
+
+operation::login[snippets="curl-request,httpie-request,path-parameters,response-headers,response-body,response-fields"]
+
+== Add Post
+
+operation::add_post[snippets="curl-request,httpie-request,path-parameters,request-headers,request-body,request-fields,response-body,response-fields"]
+
+== Modify Post
+
+operation::modify_post[snippets="curl-request,httpie-request,path-parameters,request-headers,request-body,request-fields,response-body,response-fields"]
+
+== Get Post
+
+operation::get_post[snippets="curl-request,httpie-request,path-parameters,request-headers,response-body,response-fields"]
