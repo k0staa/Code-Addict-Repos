@@ -59,7 +59,7 @@ class BlogApiDocumentationSpec extends Specification {
                                 ))
 
         when:
-        final response = request.post("/api/post")
+        final response = request.post("/api/login")
 
         then:
         response.statusCode() == HttpStatus.OK.value()
@@ -89,7 +89,7 @@ class BlogApiDocumentationSpec extends Specification {
                                 ))
 
         when:
-        final response = request.post('/api//post')
+        final response = request.post('/api/post')
 
         then:
         response.statusCode() == HttpStatus.OK.value()
