@@ -60,4 +60,4 @@ asciidoctor {
 	}
 }
 
-build.dependsOn(asciidoctor)
+bootRun.dependsOn(asciidoctor)

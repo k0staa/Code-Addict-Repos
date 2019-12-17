@@ -1,21 +1,22 @@
-# API documentation with Spock and Restassured in Spring Boot 2 app
+# API documentation with Spock and REST Assured in Spring Boot 2 app
 
-Aim of the project is to show how to do API documentation generation with Spock and Restassured in Spring Boot 2 application. Whole idea is described in my blog 
+Aim of the project is to show how to do API documentation generation with Spock and REST assured in Spring Boot 2 application. Whole idea is described in my blog 
 post [Code-Addict](http://code-addict.pl/spock-restassured-docs/)
 
 ## Functionalities:
-API documentation is generated during build process and provided in `/api/docs` path
+API documentation is generated during build/tests process and provided in `/docs/api.html` path
 
 ## Dependencies
 Project is very simple and uses following dependencies:
  - Spring Boot 2.1.1
- - Restassured
+ - REST Assured [http://rest-assured.io/](http://rest-assured.io/)
  - Spock
 
 ## Running
 Just run using Spring Boot plugin command:
 `./gradlew bootRun `
-Go to `localhost:8080/api/docs` and see how it works.
+This will compile app and run Spock REST Assured tests which generate API docs.
+Go to [http://localhost:8080/docs/api.html](http://localhost:8080/docs/api.html) and see how they looks.
 
 ## Licence
 
@@ -23,7 +24,7 @@ Project uses a MIT licence .
 
 MIT License
 
-Copyright (c) 2018 Michal Kostewicz
+Copyright (c) 2019 Michal Kostewicz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

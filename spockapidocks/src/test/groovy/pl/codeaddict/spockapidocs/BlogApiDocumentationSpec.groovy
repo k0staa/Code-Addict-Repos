@@ -55,7 +55,7 @@ class BlogApiDocumentationSpec extends Specification {
                                         "login",
                                         responseHeaders(
                                                 headerWithName("Set-Auth-Token").description(
-                                                        "Token authorizing user in admin panel")),
+                                                        "Token for user authentication")),
                                 ))
 
         when:
@@ -80,12 +80,12 @@ class BlogApiDocumentationSpec extends Specification {
                                         "add_post",
                                         responseFields(
                                                 fieldWithPath("id")
-                                                        .description("Created post ID")),
+                                                        .description("Newly created post identification number")),
                                         requestFields(
                                                 fieldWithPath("text").description("Blog post text")),
                                         requestHeaders(
                                                 headerWithName("Authorization").description(
-                                                        "Token authorizing user")),
+                                                        "Token for user authentication")),
                                 ))
 
         when:
@@ -109,7 +109,7 @@ class BlogApiDocumentationSpec extends Specification {
                                         "modify_post",
                                         pathParameters(
                                                 parameterWithName("id")
-                                                        .description("Post unique ID")),
+                                                        .description("Post unique identification number")),
                                         requestFields(
                                                 fieldWithPath("text").description("Blog post text")),
                                         requestHeaders(
@@ -137,16 +137,16 @@ class BlogApiDocumentationSpec extends Specification {
                                         "get_post",
                                         pathParameters(
                                                 parameterWithName("id")
-                                                        .description("Blog post unique ID")),
+                                                        .description("Blog post unique identification number")),
                                         responseFields(
                                                 fieldWithPath("id")
-                                                        .description("Blog post ID"),
+                                                        .description("Blog post identification number"),
                                                 fieldWithPath("text")
                                                         .description("Blog post text"),
                                         ),
                                         requestHeaders(
                                                 headerWithName("Authorization").description(
-                                                        "Token authorizing user"))
+                                                        "Token for user authentication"))
                                 ))
 
         when:
