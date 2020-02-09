@@ -1,0 +1,8 @@
+version: '2'
+services:
+  rabbit-mq:
+    image: rabbitmq:3
+  siddhi-demo-client:
+    image: pl.codeaddict/siddhidemoclient:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
