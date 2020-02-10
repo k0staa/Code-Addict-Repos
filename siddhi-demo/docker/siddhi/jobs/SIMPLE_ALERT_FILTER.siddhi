@@ -1,0 +1,31 @@
+@App:name('SIMPLE_ALERT_FILTER')
+
+@info(name = 'query1')
+@source(type ='rabbitmq',
+uri = 'amqp://guest:guest@siddhi-demo-rabbit-mq:5672',
+routing.key= 'messages',
+exchange.name= 'direct',
+queue.name= 'messages',
+@map(type='json'))
+define stream MessageStream (msg string);
+
+@sink(type = 'log')
+define stream LogStream (msg string);
+
+@sink(type ='rabbitmq',
+uri = 'amqp://guest:guest@siddhi-demo-rabbit-mq:5672',
+routing.key= 'alerts',
+exchange.name= 'direct_alerts',
+queue.name= 'alerts',
+@map(type='json'))
+define stream AlertStream (msg string);
+
+@info(name = 'alert')
+from MessageStream#window.time(30 sec)
+select msg
+insert into AlertStream;
+
+@info(name = 'query1')
+from MessageStream#window.time(30 sec)
+select msg
+insert into LogStream;

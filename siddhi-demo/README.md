@@ -20,8 +20,8 @@ First please run gradle build command with docker image build task:
 `./gradlew distDocker`
 Now you can start docker by run simple docker-compose command:
 `cd docker && docker-compose up`
-Open `localhost:8080/alarms/stream` and `localhost:8080/data` in web browser 
-and write something in  `localhost:8080/data` text box. If you write alarm five times in 30 seconds time window you should
+Open `localhost:8080/alarms/stream` and `localhost:8080/message.html` in web browser 
+and write something in  `localhost:8080/message.html` text area. If you write alarm five times in 30 seconds time window you should
 see alarm message in alarms stream. 
 
 ## Licence

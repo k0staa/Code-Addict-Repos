@@ -1,8 +1,21 @@
 version: '2'
 services:
-  rabbit-mq:
-    image: rabbitmq:3
-  siddhi-demo-client:
+  siddhi-demo-rabbit-mq:
+    container_name: siddhi-demo-rabbit-mq
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  siddhi-demo-siddhi-core:
+    container_name: siddhi-demo-siddhi-core
+    image: siddhiio/siddhi-runner-alpine
+    ports:
+      - "8006:8006"
+    volumes:
+      - ./siddhi/jobs:/apps
+    command: -Dapps=/apps/
+  siddhi-demo-app:
+    container_name: siddhi-demo-app
     image: pl.codeaddict/siddhidemoclient:0.0.1-SNAPSHOT
     ports:
       - "8080:8080"

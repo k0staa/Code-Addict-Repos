@@ -1,0 +1,4 @@
+siddhidemo.rabbitmq:
+  messageQueue: 'messages'
+
+logging.level.root: DEBUG

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form action="/messages"  id="alert-form">
+    <textarea name="msg" form="alert-form" id="msg-textarea" placeholder="Enter message here..."></textarea>
+    <input type="submit">
+</form>
+<script type="text/javascript">
+window.addEventListener( "load", function () {
+  function sendData() {
+    const XHR = new XMLHttpRequest();
+    var textAreaValue = msg_textarea.value;
+    var obj = { msg: textAreaValue }
+    var textAreaJsonValue = JSON.stringify(obj, undefined, 4);
+
+    XHR.addEventListener( "load", function(event) {
+      alert( event.target.responseText );
+    } );
+
+    XHR.addEventListener( "error", function( event ) {
+      alert( 'Oops! Something went wrong.' );
+    } );
+
+    XHR.open( "POST", "/messages" );
+    XHR.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    XHR.send(textAreaJsonValue);
+  }
+   let form = document.getElementById("alert-form" );
+   let msg_textarea = document.getElementById("msg-textarea");
+  form.addEventListener( "submit", function ( event ) {
+    event.preventDefault();
+
+    sendData();
+  } );
+} );
+</script>
+
+</body>
+</html>
