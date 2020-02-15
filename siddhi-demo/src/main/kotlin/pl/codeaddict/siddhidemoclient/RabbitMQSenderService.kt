@@ -16,6 +16,6 @@ class RabbitMQSenderService {
 
     fun send(message: String) {
         rabbitTemplate!!.convertAndSend(queue!!.name, message);
-        System.out.println(" [x] Sent '$message'");
+        println(" [x] Sent '$message'");
     }
 }

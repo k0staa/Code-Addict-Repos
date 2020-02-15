@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component
 @Component
 class RabbitMQAlarmReceiver {
 
-    @RabbitListener(bindings = [QueueBinding(value = Queue(value = "alerts", durable = "true"),
-            exchange = Exchange(value = "direct_alerts", ignoreDeclarationExceptions = "true"),
-            key = ["alerts"])]
+    @RabbitListener(bindings = [QueueBinding(value = Queue(value = "\${siddhidemo.rabbitmq.alertsQueue}", durable = "true"),
+            exchange = Exchange(value = "\${siddhidemo.rabbitmq.alertsExchange}", durable = "false", ignoreDeclarationExceptions = "true"),
+            key = ["\${siddhidemo.rabbitmq.alertsRoutingKey}"])]
     )
     fun receiver(`in`: String) {
         println(" [x] Received '$`in`'")

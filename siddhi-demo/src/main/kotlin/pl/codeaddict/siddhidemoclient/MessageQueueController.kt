@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class MessageQueueController {
-
     @Autowired
     private val rabbitMQSender: RabbitMQSenderService? = null
 

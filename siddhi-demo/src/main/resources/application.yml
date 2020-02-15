@@ -1,4 +1,7 @@
 siddhidemo.rabbitmq:
   messageQueue: 'messages'
+  alertsQueue: 'alerts'
+  alertsRoutingKey: 'alerts'
+  alertsExchange: 'direct_alerts'
 
 logging.level.root: DEBUG

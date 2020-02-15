@@ -55,7 +55,7 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    mainClassName = "pl.codeaddict.siddhidemoclient.SiddhidemoclientApplication"
+    mainClassName = "pl.codeaddict.siddhidemoclient.SiddhidemoclientApplicationKt"
 }
 
 configure<se.transmode.gradle.plugins.docker.DockerPluginExtension> {
