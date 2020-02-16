@@ -1,6 +1,6 @@
 @App:name('SIMPLE_ALERT_FILTER')
 
-@info(name = 'query1')
+@info(name = 'stream from messages queue')
 @source(type ='rabbitmq',
 uri = 'amqp://guest:guest@siddhi-demo-rabbit-mq:5672',
 routing.key= 'messages',
