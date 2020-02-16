@@ -69,9 +69,9 @@ tasks.register("copyJar",Copy::class){
     into(file("$buildDir/docker"))
 }
 
-tasks.named<se.transmode.gradle.plugins.docker.DockerTask>("distDocker") {
+tasks.register("appDocker" ,se.transmode.gradle.plugins.docker.DockerTask::class) {
     dependsOn("copyJar")
     addFile("siddhidemoclient-0.0.1-SNAPSHOT.jar", "/")
-    entryPoint(listOf("java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/siddhidemoclient-0.0.1-SNAPSHOT/lib/siddhidemoclient-0.0.1-SNAPSHOT.jar"))
+    entryPoint(listOf("java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/siddhidemoclient-0.0.1-SNAPSHOT.jar"))
 }
 

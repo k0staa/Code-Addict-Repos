@@ -3,5 +3,11 @@ siddhidemo.rabbitmq:
   alertsQueue: 'alerts'
   alertsRoutingKey: 'alerts'
   alertsExchange: 'direct_alerts'
+spring:
+  rabbitmq:
+    host: siddhi-demo-rabbit-mq
+    port: 5672
+    username: guest
+    password: guest
 
 logging.level.root: DEBUG
