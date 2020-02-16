@@ -6,7 +6,6 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.stereotype.Component
 
-
 @Component
 class RabbitMQAlarmReceiver {
 
