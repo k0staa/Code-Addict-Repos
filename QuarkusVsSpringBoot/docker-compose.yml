@@ -8,3 +8,22 @@ services:
       - "81:81"
     environment:
       H2_OPTIONS: '-ifNotExists'
+  app-quarkus-jvm:
+    container_name: quarkus-vs-spring-app-quarkus-jvm
+    build:
+      context: ./QuarkusSimpleAPI/
+      dockerfile: ./QuarkusSimpleAPI/src/main/docker/Dockerfile.multistage
+    image: quarkus_vs_spring_app_quarkus_jvm
+  app-quarkus-native:
+    container_name: quarkus-vs-spring-app-quarkus-native
+    build:
+      context: ./QuarkusSimpleAPI/
+      dockerfile: ./QuarkusSimpleAPI/src/main/docker/Dockerfile.native.multistage
+    image: quarkus_vs_spring_app_quarkus_native
+  app-spring-boot:
+    container_name: quarkus-vs-spring-app-spring-jvm
+    build:
+      context: ./SpringSimpleAPI/
+      dockerfile: ./SpringSimpleAPI/src/main/docker/Dockerfile.multistage
+    image: quarkus_vs_spring_app_spring_jvm
+

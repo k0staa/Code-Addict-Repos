@@ -10,7 +10,7 @@ USER root
 RUN chown -R quarkus /usr/src/app
 USER quarkus
 WORKDIR /usr/src/app/
-RUN ./gradlew clean buildNative -x test
+RUN ./gradlew clean build -x test -Dquarkus.package.type=native
 
 ## Stage 2 : create the docker final image
 FROM registry.access.redhat.com/ubi8/ubi-minimal
