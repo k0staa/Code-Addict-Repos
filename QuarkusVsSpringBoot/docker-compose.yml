@@ -1,0 +1,10 @@
+version: '3'
+services:
+  h2:
+    container_name: quarkus-vs-spring-h2
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521"
+      - "81:81"
+    environment:
+      H2_OPTIONS: '-ifNotExists'

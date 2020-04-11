@@ -1,0 +1,21 @@
+## Stage 1 : build with maven builder image (using same imag as for quarkus because it has everything)
+FROM quay.io/quarkus/centos-quarkus-maven:19.3.1-java11 AS build
+COPY src /usr/src/app/src
+COPY gradle /usr/src/app/gradle
+COPY gradlew /usr/src/app
+COPY build.gradle.kts /usr/src/app
+COPY settings.gradle.kts /usr/src/app
+#COPY gradle.properties /usr/src/app
+USER root
+RUN chown -R quarkus /usr/src/app
+USER quarkus
+WORKDIR /usr/src/app/
+RUN ./gradlew clean build -x test
+
+## Stage 2 : create the docker final image
+FROM openjdk:11.0.6-jre
+WORKDIR /work/
+COPY --from=build /usr/src/app/build/*-runner.jar /work/app.jar
+RUN chmod 775 /work
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]
