@@ -10,20 +10,26 @@ services:
       H2_OPTIONS: '-ifNotExists'
   app-quarkus-jvm:
     container_name: quarkus-vs-spring-app-quarkus-jvm
+    ports:
+      - "8081:8080"
     build:
       context: ./QuarkusSimpleAPI/
-      dockerfile: ./QuarkusSimpleAPI/src/main/docker/Dockerfile.multistage
+      dockerfile: ./src/main/docker/Dockerfile.multistage
     image: quarkus_vs_spring_app_quarkus_jvm
   app-quarkus-native:
     container_name: quarkus-vs-spring-app-quarkus-native
+    ports:
+      - "8082:8080"
     build:
       context: ./QuarkusSimpleAPI/
-      dockerfile: ./QuarkusSimpleAPI/src/main/docker/Dockerfile.native.multistage
+      dockerfile: ./src/main/docker/Dockerfile.native.multistage
     image: quarkus_vs_spring_app_quarkus_native
   app-spring-boot:
     container_name: quarkus-vs-spring-app-spring-jvm
+    ports:
+      - "8090:8080"
     build:
       context: ./SpringSimpleAPI/
-      dockerfile: ./SpringSimpleAPI/src/main/docker/Dockerfile.multistage
+      dockerfile: ./src/main/docker/Dockerfile.multistage
     image: quarkus_vs_spring_app_spring_jvm
 

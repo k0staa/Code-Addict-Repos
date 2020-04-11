@@ -26,11 +26,16 @@ Project is very simple and uses following dependencies:
 1. Quarkus app:
 You can run quarkus app in JVM or as Native application.
 - In JVM (dev mode) - just run `./gradlew quarkusDev`
-- In JVM (JAR) - you can build JAR `./gradlew build` and run from it `java -jar ./build/QuarkusSimpleAPI-1.0.0-SNAPSHOT-runner.jar`
+- In JVM (JAR) - you can build uber JAR `./gradlew clean build -x test -Dquarkus.package.uber-jar=true` and run from it `java -jar ./build/QuarkusSimpleAPI-1.0.0-SNAPSHOT-runner.jar`. I ommited tests because the only ones that I created are integration tests and applciation need to be up and running before. 
 - Native (using Docker) - I prepared docker configuration in order to simplify build process. You can use `./build_native.sh` script in project dir and then `./run_native.sh`.
 - Native , you need to install GrallVM and run `./gradlew clean build -Dquarkus.package.type=native` and you can run `QuarkusSimpleAPI-1.0.0-SNAPSHOT-runner` as normal application.
 2. Srping Boot app:
 You can simply run `./gradlew bootRun` or build JAR using `./gradlew build` command and then run it using: `java -jar ./build/SpringSimpleAPI-1.0.0-SNAPSHOT.jar`
+
+
+**To run everything** you can use `docker-compose up` command in root directory. It runs Quarkus app both in native and JVM mode, Spring Boot app and H2 in separate container.
+
+You can test endpoints using bash scripts (curl) located in `test-scripts` directory. First use `postObject.sh` to create object in database and then `getObject.sh` to fetch object from database.
 
 ## Licence
 

@@ -10,7 +10,7 @@ USER root
 RUN chown -R quarkus /usr/src/app
 USER quarkus
 WORKDIR /usr/src/app/
-RUN ./gradlew clean build -x test
+RUN ./gradlew clean build -x test -Dquarkus.package.uber-jar=true
 
 ## Stage 2 : create the docker final image
 FROM openjdk:11.0.6-jre
