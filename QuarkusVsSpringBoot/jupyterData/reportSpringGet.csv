@@ -1,0 +1,2 @@
+latency_min,latency_max,latency_mean,latency_stdev,latency_p50,latency_p90,latency_p95,latency_p99,rps,duration,requests,bytes,errors_connect,errors_read,errors_write,errors_status,errors_imeout
+0.303,441.14,11.405436122474,45567.164830198,2.837,10.651,20.349,307.525,3239.6820918867,10003142,32407,4705076,0,0,0,0,0

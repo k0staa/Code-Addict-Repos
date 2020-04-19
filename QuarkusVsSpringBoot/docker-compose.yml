@@ -8,28 +8,52 @@ services:
       - "81:81"
     environment:
       H2_OPTIONS: '-ifNotExists'
+    networks:
+      - quarkus-vs-spring-net
   app-quarkus-jvm:
     container_name: quarkus-vs-spring-app-quarkus-jvm
     ports:
       - "8081:8080"
+    environment:
+      QUARKUS_DATASOURCE_JDBC_URL: 'jdbc:h2:tcp://quarkus-vs-spring-h2:1521/test'
     build:
       context: ./QuarkusSimpleAPI/
       dockerfile: ./src/main/docker/Dockerfile.multistage
     image: quarkus_vs_spring_app_quarkus_jvm
+    networks:
+      - quarkus-vs-spring-net
   app-quarkus-native:
     container_name: quarkus-vs-spring-app-quarkus-native
     ports:
       - "8082:8080"
+    environment:
+      QUARKUS_DATASOURCE_JDBC_URL: 'jdbc:h2:tcp://quarkus-vs-spring-h2:1521/test'
     build:
       context: ./QuarkusSimpleAPI/
       dockerfile: ./src/main/docker/Dockerfile.native.multistage
     image: quarkus_vs_spring_app_quarkus_native
+    networks:
+      - quarkus-vs-spring-net
   app-spring-boot:
     container_name: quarkus-vs-spring-app-spring-jvm
     ports:
       - "8090:8080"
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:h2:tcp://quarkus-vs-spring-h2:1521/test'
     build:
       context: ./SpringSimpleAPI/
       dockerfile: ./src/main/docker/Dockerfile.multistage
     image: quarkus_vs_spring_app_spring_jvm
+    networks:
+      - quarkus-vs-spring-net
+  jupyter:
+    container_name: quarkus-vs-spring-jupyter
+    image: jupyter/scipy-notebook:latest
+    ports:
+      - "8888:8888"
+    networks:
+      - quarkus-vs-spring-net
+networks:
+  quarkus-vs-spring-net:
+    external: true
 
