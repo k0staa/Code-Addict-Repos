@@ -1,0 +1,4 @@
+Framework,Mem_usage_at_rest_mb, Max_mem_usage_max_mb
+app-quarkus-jvm,97.34,418.2
+app-spring-boot,287.3,601.5
+app-quarkus-native,6.488,282.5

@@ -49,10 +49,10 @@ services:
   jupyter:
     container_name: quarkus-vs-spring-jupyter
     image: jupyter/scipy-notebook:latest
+    volumes:
+      - ./jupyterData:/home/jovyan/work
     ports:
       - "8888:8888"
-    networks:
-      - quarkus-vs-spring-net
 networks:
   quarkus-vs-spring-net:
     external: true

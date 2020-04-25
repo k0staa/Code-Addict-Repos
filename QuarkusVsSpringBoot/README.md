@@ -30,7 +30,7 @@ You can run quarkus app in JVM or as Native application.
 - Native (using Docker) - I prepared docker configuration in order to simplify build process. You can use `./build_native.sh` script in project dir and then `./run_native.sh`.
 - Native , you need to install GrallVM and run `./gradlew clean build -Dquarkus.package.type=native` and you can run `QuarkusSimpleAPI-1.0.0-SNAPSHOT-runner` as normal application.
 2. Srping Boot app:
-You can simply run `./gradlew bootRun` or build JAR using `./gradlew build` command and then run it using: `java -jar ./build/SpringSimpleAPI-1.0.0-SNAPSHOT.jar`
+You can simply run `./gradlew bootRun` or build JAR using `./gradlew build -x test` command and then run it using: `java -jar ./build/libs/SpringSimpleAPI-1.0.0-SNAPSHOT.jar`
 
 
 **To run everything** you can use `docker-compose up` command in root directory. It runs Quarkus app both in native and JVM mode, Spring Boot app and H2 in separate container.
