@@ -1,4 +1,4 @@
-Framework, bytes
-app-quarkus-jvm,23388866
-app-spring-boot,26882397
-app-quarkus-native,47413896
+Framework, size_mb
+app-quarkus-jvm,23.388866
+app-spring-boot,26.882397
+app-quarkus-native,47.413896
