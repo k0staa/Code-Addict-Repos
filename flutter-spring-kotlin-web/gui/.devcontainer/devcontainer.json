@@ -1,0 +1,10 @@
+{
+	"name": "Flutter",
+	"dockerFile": "../Dockerfile_dev",
+	"extensions": [
+		"dart-code.dart-code",
+		"dart-code.flutter",
+		"k--kato.intellij-idea-keybindings"
+	],
+	"runArgs": []
+}
