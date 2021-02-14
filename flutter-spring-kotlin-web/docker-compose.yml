@@ -1,0 +1,6 @@
+version: "3.7"
+services:
+  flutter-kotlin-api:
+    image: flutter-kotlin-api
+    ports: 
+      - "8080:8080"
