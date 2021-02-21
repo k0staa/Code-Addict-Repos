@@ -2,5 +2,17 @@ version: "3.7"
 services:
   flutter-kotlin-api:
     image: flutter-kotlin-api
+    environment:
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak-flutter-kotlin-demo:8081/auth/realms/kotlin-flutter-demo-realm/protocol/openid-connect/certs
     ports: 
       - "8080:8080"
+  keycloak-flutter-kotlin-demo:
+    image: jboss/keycloak:12.0.3
+    environment:
+      - KEYCLOAK_USER=admin 
+      - KEYCLOAK_PASSWORD=admin 
+      - KEYCLOAK_IMPORT=/tmp/realm-export.json
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./keycloak-docker/realm-export.json:/tmp/realm-export.json
