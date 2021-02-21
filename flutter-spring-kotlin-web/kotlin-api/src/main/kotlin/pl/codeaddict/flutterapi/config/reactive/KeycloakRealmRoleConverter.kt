@@ -15,7 +15,7 @@ class KeycloakRealmRoleConverter : JwtAuthenticationConverter() {
     override fun extractAuthorities(jwt: Jwt): Collection<SimpleGrantedAuthority> {
         val authorities = jwt.claims["realm_access"] as Map<String, List<String>>? ?: emptyMap()
         return authorities.getOrDefault("roles", emptyList())
-            .map { roleName -> "$authorityPrefix$roleName" }
+            .map { roleName -> "$authorityPrefix${roleName.toUpperCase()}" }
             .map { role -> SimpleGrantedAuthority(role) }
     }
 }

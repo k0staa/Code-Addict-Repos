@@ -15,7 +15,7 @@ class ApiController {
     fun getNonSecuredMessage() = Mono.just(ApiResponse("Server return non secured message"))
 
     @CrossOrigin
-    @PreAuthorize("hasRole('user')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/secured")
     fun getSecuredMessage() = Mono.just(ApiResponse("Server return SECURED message"))
 }

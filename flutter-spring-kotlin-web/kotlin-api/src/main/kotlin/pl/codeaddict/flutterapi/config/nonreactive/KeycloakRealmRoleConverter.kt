@@ -19,7 +19,7 @@ class KeycloakRealmRoleConverter : Converter<Jwt, Collection<GrantedAuthority>> 
         val realmAccess = jwt.getClaim<Map<String, List<String>>>("realm_access") ?: emptyMap()
         return realmAccess.getOrDefault("roles", emptyList())
             .stream()
-            .map { roleName -> "$authorityPrefix$roleName" }
+            .map { roleName -> "$authorityPrefix${roleName.toUpperCase()}" }
             .map { role -> SimpleGrantedAuthority(role) }
             .collect(Collectors.toSet())
     }

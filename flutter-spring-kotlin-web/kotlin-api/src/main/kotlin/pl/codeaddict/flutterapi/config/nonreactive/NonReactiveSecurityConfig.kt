@@ -32,6 +32,5 @@ class NonReactiveSecurityConfig : WebSecurityConfigurerAdapter() {
             .oauth2ResourceServer()
             .jwt()
             .jwtAuthenticationConverter(KeycloakJwtAuthenticationConverter())
-        // @formatter:on
     }
 }
