@@ -6,5 +6,6 @@
 		"dart-code.flutter",
 		"k--kato.intellij-idea-keybindings"
 	],
-	"runArgs": []
+	"runArgs": [],
+	"postCreateCommand": "flutter pub get"
 }
