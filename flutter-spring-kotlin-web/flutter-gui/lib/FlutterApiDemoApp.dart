@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:http/http.dart' as http;    
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'ServerMessage.dart';
 
@@ -51,26 +51,36 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _serverMessage = '';
+  Color _serverMessageStyleColor = Colors.blue;
 
-    _fetchServerMessage() async {
+  _fetchServerMessage(final String apiUrl) async {
     final baseUrl = FlavorConfig.instance.variables["baseUrl"];
-    final url = '$baseUrl/not-secured';
+    final url = '$baseUrl$apiUrl';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final serverMessage = ServerMessage.fromJson(json);
       _updateServerMessage(serverMessage);
+      _updateServerMessageStyleColor(Colors.blue);
     } else {
-      throw Exception('Failed to load album');
+      final requestFailedMsg = "Failed to fetch data from: $apiUrl";
+      debugPrint(requestFailedMsg);
+      _updateServerMessage(new ServerMessage(message: requestFailedMsg));
+      _updateServerMessageStyleColor(Colors.red);
     }
   }
 
-    void _updateServerMessage(ServerMessage serverMessage) {
+  void _updateServerMessage(ServerMessage serverMessage) {
     setState(() {
       _serverMessage = serverMessage.message;
     });
   }
 
+  void _updateServerMessageStyleColor(MaterialColor newColor) {
+    setState(() {
+      _serverMessageStyleColor = newColor;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,42 +91,70 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-                         ElevatedButton(
-                child: Text('Non secured API'),
-                onPressed: _fetchServerMessage,
-              ),
-              Text(
-                '$_serverMessage',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-          ],
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
         ),
-      ),
-    );
+        body: Center(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        ElevatedButton(
+                          child: Text('Non secured API'),
+                          onPressed: () => _fetchServerMessage("/not-secured"),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        ElevatedButton(
+                          child: Text('Secured API'),
+                          onPressed: () => _fetchServerMessage("/secured"),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                Divider(),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    '$_serverMessage',
+                    style: new TextStyle(
+                        inherit: true,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        decorationStyle: TextDecorationStyle.wavy,
+                        color: _serverMessageStyleColor),
+                  ),
+                ])
+              ],
+            ),
+          ),
+        ));
   }
 }

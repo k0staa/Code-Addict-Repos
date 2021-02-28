@@ -24,7 +24,12 @@ Project uses following dependencies:
 cd kotlin-api
 ./gradlew jibDockerBuild`
 ```
-2. GUI application - TODO
+2. GUI application
+To run Flutter application you can simply use `flutter run` command with Flutter SDK installed on your machine. For details please check my blog post.
+You can also build docker container with application using below command:
+```
+TODO
+```
 
 3. Now you can start all docker containers using docker-compose command:
 `docker-compose up`
