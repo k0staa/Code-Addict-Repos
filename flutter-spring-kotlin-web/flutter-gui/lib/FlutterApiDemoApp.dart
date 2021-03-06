@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _fetchServerMessage(final String apiUrl) async {
     final baseUrl = FlavorConfig.instance.variables["baseUrl"];
-    final url = '$baseUrl$apiUrl';
+    final url = Uri.parse('$baseUrl$apiUrl');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
