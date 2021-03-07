@@ -20,7 +20,10 @@ class SessionStorageService {
   }
 
   TokenModel retriveAccessToken() {
-    var tokenJson = _prefs.getString(ACCESS_TOKEN_KEY) ?? "";
+    var tokenJson = _prefs.getString(ACCESS_TOKEN_KEY);
+    if (tokenJson == null) {
+      return null;
+    }
     return TokenModel.fromJson(jsonDecode(tokenJson));
   }
 }

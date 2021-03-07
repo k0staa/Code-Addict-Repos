@@ -42,7 +42,7 @@ class _UserHomePageState extends State<UserHomePage> {
 
   _fetchNotSecuredServerMessage() async {
     var apiService = await RestApiService.getInstance();
-    final response = await apiService.apiGetSecured<ServerMessage>(
+    final response = await apiService.apiGetNotSecured<ServerMessage>(
         ApiPath.API_NOT_SECURED, (json) => ServerMessage.fromJson(json));
     _updateState(response);
   }
