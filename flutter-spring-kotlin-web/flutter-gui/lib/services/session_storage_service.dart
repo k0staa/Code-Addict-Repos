@@ -19,11 +19,11 @@ class SessionStorageService {
     _prefs.setString(ACCESS_TOKEN_KEY, accessToken);
   }
 
-  TokenModel retriveAccessToken() {
+  String retriveAccessToken() {
     var tokenJson = _prefs.getString(ACCESS_TOKEN_KEY);
     if (tokenJson == null) {
       return null;
     }
-    return TokenModel.fromJson(jsonDecode(tokenJson));
+    return TokenModel.fromJson(jsonDecode(tokenJson)).accessToken;
   }
 }
