@@ -7,10 +7,6 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter
 import org.springframework.security.web.server.SecurityWebFilterChain
-import org.springframework.web.cors.reactive.CorsWebFilter
-
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 
 
 /**
@@ -41,17 +37,6 @@ class ReactiveSecurityConfig {
                     }
             }
         return http.build()
-    }
-
-    @Bean
-    fun corsWebFilter(): CorsWebFilter? {
-        val corsConfig = CorsConfiguration()
-        corsConfig.allowedOrigins = listOf("*")
-        corsConfig.maxAge = 8000L
-        corsConfig.allowedMethods = listOf("PUT", "GET")
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", corsConfig)
-        return CorsWebFilter(source)
     }
 }
 

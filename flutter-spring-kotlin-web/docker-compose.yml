@@ -1,16 +1,19 @@
 version: "3.7"
 services:
   flutter-kotlin-api:
+    container_name: flutter-kotlin-api
     image: flutter-kotlin-api
     environment:
-      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak-flutter-kotlin-demo:8081/auth/realms/kotlin-flutter-demo-realm/protocol/openid-connect/certs
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://flutter-kotlin-keycloak:8080/auth/realms/kotlin-flutter-demo-realm/protocol/openid-connect/certs
     ports: 
       - "8080:8080"
   flutter-kotlin-gui:
+    container_name: flutter-kotlin-gui
     image: flutter-kotlin-gui
     ports: 
       - "80:80"
-  keycloak-flutter-kotlin-demo:
+  flutter-kotlin-keycloak:
+    container_name: flutter-kotlin-keycloak
     image: jboss/keycloak:12.0.3
     environment:
       - KEYCLOAK_USER=admin 
