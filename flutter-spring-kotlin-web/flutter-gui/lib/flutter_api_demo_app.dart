@@ -1,47 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:gui/LoginPage.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'ServerMessage.dart';
+import 'package:gui/constants/api_path.dart';
+import 'package:gui/login_page.dart';
+import 'package:gui/models/api_response.dart';
+import 'package:gui/services/rest_api_service.dart';
+import 'models/server_message.dart';
 
 class FlutterApiDemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter with Keycloak Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter API Demo Home Page'),
+      home: UserHomePage(
+        username: null,
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+class UserHomePage extends StatefulWidget {
+  UserHomePage({Key key, this.username}) : super(key: key);
+  final String title = 'User Home Page';
+  final String username;
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _UserHomePageState createState() => _UserHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _UserHomePageState extends State<UserHomePage> {
   String _serverMessage = '';
   Color _serverMessageStyleColor = Colors.blue;
 
-  _fetchServerMessage(final String apiUrl) async {
-    final baseUrl = FlavorConfig.instance.variables["baseApiUrl"];
-    final url = Uri.parse('$baseUrl$apiUrl');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      final serverMessage = ServerMessage.fromJson(json);
-      _updateServerMessage(serverMessage);
+  _fetchSecuredServerMessage() async {
+    var apiService = await RestApiService.getInstance();
+    final response = await apiService.apiGetSecured<ServerMessage>(
+        ApiPath.API_SECURED, (json) => ServerMessage.fromJson(json));
+    _updateState(response);
+  }
+
+  _fetchNotSecuredServerMessage() async {
+    var apiService = await RestApiService.getInstance();
+    final response = await apiService.apiGetSecured<ServerMessage>(
+        ApiPath.API_NOT_SECURED, (json) => ServerMessage.fromJson(json));
+    _updateState(response);
+  }
+
+  void _updateState(ApiResponse<ServerMessage> response) {
+    if (response.code == 200) {
+      _updateServerMessage(response.body);
       _updateServerMessageStyleColor(Colors.blue);
     } else {
-      final requestFailedMsg = "Failed to fetch data from: $apiUrl";
-      debugPrint(requestFailedMsg);
+      final requestFailedMsg =
+          "Failed to fetch data from: ${ApiPath.API_SECURED}";
       _updateServerMessage(new ServerMessage(message: requestFailedMsg));
       _updateServerMessageStyleColor(Colors.red);
     }
@@ -74,6 +86,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           actions: <Widget>[
             Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text("Username: ${widget.username}"),
+            ),
+            Padding(
                 padding: EdgeInsets.only(right: 40.0),
                 child: GestureDetector(
                   onTap: () {
@@ -84,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Icons.portrait,
                     size: 26.0,
                   ),
-                )),
+                ))
           ],
         ),
         body: Center(
@@ -101,7 +117,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         ElevatedButton(
                           child: Text('Non secured API'),
-                          onPressed: () => _fetchServerMessage("/not-secured"),
+                          onPressed: () =>
+                              _fetchNotSecuredServerMessage(),
                         )
                       ],
                     ),
@@ -109,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         ElevatedButton(
                           child: Text('Secured API'),
-                          onPressed: () => _fetchServerMessage("/secured"),
+                          onPressed: () => _fetchSecuredServerMessage(),
                         )
                       ],
                     )
