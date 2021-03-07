@@ -8,7 +8,7 @@ The project is multi-platform, but I didn't focus on running it on iOS and Andro
 
 ## Running project
 ### Running using Flutter installed on your OS. 
-To run the project you should first install Flutter using [this](https://flutter.dev/docs/get-started/install) instructions. Then you need to choose `beta` verision of Flutter because Web is only available in beta:
+To run the project you should first install Flutter using [this](https://flutter.dev/docs/get-started/install) instructions. From Flutter version > 2.0 Web is available in stable but before that you need to choose `beta` version of Flutter because Web was only available in beta:
 ```
  flutter channel beta
  ```
@@ -35,6 +35,21 @@ and if you want to debug it you can use prepared launch configuration `./.vscode
 
 ### Open up application and debugging
 After you run the application you can open your browser and use [http://localhost:8090/](http://localhost:8090/) link to view the app. If you are using Chrome you can install `Dart Debug Extension` and debug your application (you need to click on extension to enable debug). Launch configuration for debug is part of this repository (`./.vscode/launch.json`). 
+
+### Building Docker image with application
+First please build application:
+```
+flutter build web
+```
+Then in the roor directory run following command to build image:
+```
+docker build -t flutter-kotlin-gui .
+```
+
+You can run container using following command:
+```
+docker run -p 80:80 flutter-kotlin-gui 
+```
 
 ## Getting Started
 
