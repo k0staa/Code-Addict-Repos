@@ -12,5 +12,4 @@ RUN curl -L https://storage.googleapis.com/flutter_infra/releases/stable/linux/f
 
 ENV PATH="$PATH":"/opt/flutter/.pub-cache/bin:/opt/flutter/bin"
 
-RUN flutter upgrade
 RUN flutter update-packages

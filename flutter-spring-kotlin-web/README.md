@@ -16,7 +16,7 @@ Project uses following dependencies:
  - Spring WebFlux
  - Kotlin 1.4.21
  - Keycloak 12.0.3
- - Flutter SDK >=2.7.0 <3.0.0
+ - Flutter 2
 
 ## Running
 1. API application - please run gradle command to build  docker image :
@@ -28,12 +28,12 @@ cd kotlin-api
 To run Flutter application you can simply use `flutter run` command with Flutter SDK installed on your machine. For details please check my blog post.
 You can also build docker container with application using below command:
 ```
-TODO
+docker build -t flutter-kotlin-gui .
 ```
 
 3. Now you can start all docker containers using docker-compose command:
 `docker-compose up`
-Go to `localhost:8090` and see how it works.
+Go to `http://localhost` and see how it works.
 
 ## Licence
 
