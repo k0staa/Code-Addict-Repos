@@ -12,6 +12,5 @@ RUN curl -L https://storage.googleapis.com/flutter_infra/releases/stable/linux/f
 
 ENV PATH="$PATH":"/opt/flutter/.pub-cache/bin:/opt/flutter/bin"
 
-# Enable web capabilities
 RUN flutter upgrade
 RUN flutter update-packages

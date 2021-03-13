@@ -37,11 +37,7 @@ and if you want to debug it you can use prepared launch configuration `./.vscode
 After you run the application you can open your browser and use [http://localhost:8090/](http://localhost:8090/) link to view the app. If you are using Chrome you can install `Dart Debug Extension` and debug your application (you need to click on extension to enable debug). Launch configuration for debug is part of this repository (`./.vscode/launch.json`). 
 
 ### Building Docker image with application
-First please build application:
-```
-flutter build web
-```
-Then in the roor directory run following command to build image:
+You can build application docker image using multistage Dockerfile configuration. Just use following command in root directory:
 ```
 docker build -t flutter-kotlin-gui .
 ```
