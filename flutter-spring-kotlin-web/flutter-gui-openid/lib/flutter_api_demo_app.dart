@@ -3,6 +3,7 @@ import 'package:gui/constants/api_path.dart';
 import 'package:gui/login_page.dart';
 import 'package:gui/models/api_response.dart';
 import 'package:gui/services/rest_api_service.dart';
+import 'package:openid_client/openid_client_browser.dart';
 import 'models/server_message.dart';
 
 class FlutterApiDemoApp extends StatelessWidget {
@@ -70,6 +71,28 @@ class _UserHomePageState extends State<UserHomePage> {
       _serverMessageStyleColor = newColor;
     });
   }
+
+  void _authenticate(Uri uri, String clientId, List<String> scopes) async {   
+    
+    // create the client
+    var issuer = await Issuer.discover(uri);
+    var client = new Client(issuer, clientId);
+    
+    // create an authenticator
+    var authenticator = new Authenticator(client, scopes: scopes);
+    
+    // get the credential
+    var c = await authenticator.credential;
+    
+    if (c==null) {
+      // starts the authentication
+      authenticator.authorize(); // this will redirect the browser
+    } else {
+      // return the user info
+      var userInfo = await c.getUserInfo();
+      debugPrint("User info: " + userInfo.email);
+    }
+}
 
   @override
   Widget build(BuildContext context) {
