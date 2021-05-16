@@ -1,0 +1,15 @@
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENV FLUTTER_WEB_PORT="8090"
+ENV FLUTTER_DEBUG_PORT="42000"
+
+# Prerequisites
+RUN apt-get update && apt-get install -y unzip xz-utils git openssh-client curl && apt-get upgrade -y 
+
+# Install flutter beta
+RUN curl -L https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_2.0.1-stable.tar.xz | tar -C /opt -xJ
+
+ENV PATH="$PATH":"/opt/flutter/.pub-cache/bin:/opt/flutter/bin"
+
+RUN flutter update-packages
