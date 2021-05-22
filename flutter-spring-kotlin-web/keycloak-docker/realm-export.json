@@ -645,7 +645,8 @@
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "http://localhost:8090/*"
+        "http://localhost:8090/*",
+	"http://localhost:8082/*"
       ],
       "webOrigins": ["*"],
       "notBefore": 0,

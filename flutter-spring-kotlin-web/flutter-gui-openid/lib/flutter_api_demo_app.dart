@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gui/constants/api_path.dart';
 import 'package:gui/login_page.dart';
 import 'package:gui/models/api_response.dart';
 import 'package:gui/services/rest_api_service.dart';
-import 'package:openid_client/openid_client_browser.dart';
 import 'models/server_message.dart';
+import 'package:keycloak_flutter/keycloak_flutter.dart';
+import 'dart:html';
 
 class FlutterApiDemoApp extends StatelessWidget {
   @override
@@ -33,18 +35,20 @@ class UserHomePage extends StatefulWidget {
 class _UserHomePageState extends State<UserHomePage> {
   String _serverMessage = '';
   Color _serverMessageStyleColor = Colors.blue;
+  KeycloakProfile _keycloakProfile;
+  KeycloakService _keycloakService;
 
   _fetchSecuredServerMessage() async {
     var apiService = await RestApiService.getInstance();
     final response = await apiService.apiGetSecured<ServerMessage>(
-        ApiPath.API_SECURED, (json) => ServerMessage.fromJson(json));
+        ApiPath.API_SECURED_URI, (json) => ServerMessage.fromJson(json));
     _updateState(response);
   }
 
   _fetchNotSecuredServerMessage() async {
     var apiService = await RestApiService.getInstance();
     final response = await apiService.apiGetNotSecured<ServerMessage>(
-        ApiPath.API_NOT_SECURED, (json) => ServerMessage.fromJson(json));
+        ApiPath.API_NOT_SECURED_URI, (json) => ServerMessage.fromJson(json));
     _updateState(response);
   }
 
@@ -54,7 +58,7 @@ class _UserHomePageState extends State<UserHomePage> {
       _updateServerMessageStyleColor(Colors.blue);
     } else {
       final requestFailedMsg =
-          "Failed to fetch data from: ${ApiPath.API_SECURED}";
+          "Failed to fetch data from: ${ApiPath.API_SECURED_URI}";
       _updateServerMessage(new ServerMessage(message: requestFailedMsg));
       _updateServerMessageStyleColor(Colors.red);
     }
@@ -72,27 +76,57 @@ class _UserHomePageState extends State<UserHomePage> {
     });
   }
 
-  void _authenticate(Uri uri, String clientId, List<String> scopes) async {   
-    
-    // create the client
-    var issuer = await Issuer.discover(uri);
-    var client = new Client(issuer, clientId);
-    
-    // create an authenticator
-    var authenticator = new Authenticator(client, scopes: scopes);
-    
-    // get the credential
-    var c = await authenticator.credential;
-    
-    if (c==null) {
-      // starts the authentication
-      authenticator.authorize(); // this will redirect the browser
-    } else {
-      // return the user info
-      var userInfo = await c.getUserInfo();
-      debugPrint("User info: " + userInfo.email);
-    }
-}
+  void _login() async {
+    _keycloakService.login(KeycloakLoginOptions(
+      redirectUri: "http://localhost:8090/",
+    ));
+    _keycloakProfile = await _keycloakService.loadUserProfile();
+    debugPrint(_keycloakProfile.email);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _keycloakService = initService();
+  }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+  //     _keycloakService.keycloakEventsStream.listen((event) async {
+  //       if (event.type == KeycloakEventType.onAuthSuccess) {
+  //         _keycloakProfile = await _keycloakService.loadUserProfile();
+  //       } else {
+  //         _keycloakProfile = null;
+  //       }
+  //       setState(() {});
+  //     });
+  //     _keycloakProfile = await _keycloakService.loadUserProfile(false);
+  //     setState(() {});
+  //   });
+  // }
+
+  KeycloakService initService() {
+    var keycloakService = KeycloakService(KeycloakConfig(
+        url: '${ApiPath.BASE_KEYCLOAK_URL}/auth',
+        realm: 'kotlin-flutter-demo-realm',
+        clientId: 'login-app'));
+    keycloakService.keycloakEventsStream.listen((event) {
+      if (event.type == KeycloakEventType.onAuthSuccess) {
+        // User is authenticated
+        debugPrint("HAHA");
+      }
+    });
+    keycloakService.init(
+      initOptions: KeycloakInitOptions(
+          enableLogging: true,
+          redirectUri: "http://localhost:8090/",
+          flow: "implicit"),
+    );
+    return keycloakService;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +150,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 padding: EdgeInsets.only(right: 40.0),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
+                    _login();
                   },
                   child: Icon(
                     Icons.portrait,
@@ -140,8 +173,7 @@ class _UserHomePageState extends State<UserHomePage> {
                       children: [
                         ElevatedButton(
                           child: Text('Non secured API'),
-                          onPressed: () =>
-                              _fetchNotSecuredServerMessage(),
+                          onPressed: () => _fetchNotSecuredServerMessage(),
                         )
                       ],
                     ),

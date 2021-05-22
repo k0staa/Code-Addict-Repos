@@ -14,7 +14,7 @@ class AuthService {
   }
 
   Future<int> authenticateUser(String username, String password) async {
-     var res = await http.post(ApiPath.KEYCLOAK_AUTH, headers: {
+     var res = await http.post(ApiPath.KEYCLOAK_AUTH_URI, headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     }, body: {
       "username": username,
